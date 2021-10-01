@@ -1,0 +1,41 @@
+#!/bin/bash
+exp_name="neck_matched_nobn"
+python -u new_train.py \
+    --no-bottleneck \
+    --emsize 300 \
+    --nhid 500 \
+    --nlayers 1 \
+    --attention-unit 350 \
+    --dropout 0.5 \
+    --clip 0.5 \
+    --nfc 500 \
+    --lr 0.001 \
+    --save "models/cosi-model-cv.pt" \
+    --word-vector "data/vishal_glove/glove.42B.300d.txt.pt" \
+    --seed 42 \
+    --cuda \
+    --device 2 \
+    --log-interval 20 \
+    --dictionary "/home/david/bin/git/genpara/data/COSI/cosi_vocab.json" \
+    --shuffle \
+    --class-number 376 \
+    --data "/home/david/bin/git/genpara/data/COSI/cosi_json.json" \
+    --para-data "data/para_scores.tsv" \
+    --train-data "/home/david/bin/git/genpara/data/COSI/cosi_corrected.tsv" \
+    --val-data "/home/david/bin/git/genpara/data/COSI/cosi_corrected.tsv" \
+    --test-data "/home/david/bin/git/genpara/data/COSI/cosi_corrected.tsv" \
+    --metric log_1_4 \
+    --sample-rate 0.0 \
+    --sampling-schema "None" \
+    --label-data "/home/david/bin/git/genpara/data/COSI/cosi_labels.csv" \
+    --out-log "choices.$exp_name.csv" \
+    --optimizer Adam \
+    --attention-hops 8 \
+    --reserved 0 \
+    --ncat 8 \
+    --penalty uncover \
+    --penalization-coeff 0.0 \
+    --sparsity L1 \
+    --sparsity-coeff 0.0 \
+    --epochs 40 \
+    --stage2 20

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+DATADIR=.
+
+WORD=$1
+POS=$2
+
+if [ "$1" = "" ]; then
+  echo "Usage: ./get_ppsets <WORD> <POS> \n <POS> argument should contain a PTB constituent tag in brackets, i.e. [NP] or [JJ]"
+fi
+
+modpos=${POS#[}
+modpos=${modpos%]}
+modpos=${modpos//\//_}
+
+FILENAME=ppdb-2.0-xxl-all-clusters-$modpos.numbered_max.gz
+
+echo Searching for word $WORD in $DATADIR/$FILENAME
+RES=`zgrep -w "|||\s$WORD\s" $DATADIR/$FILENAME`
+
+if [ ${#RES} -gt 0 ]; then
+  echo $RES | ./pretty_print_result
+else
+  echo No matches found.
+fi

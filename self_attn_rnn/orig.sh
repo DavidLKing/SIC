@@ -1,0 +1,41 @@
+#!/bin/bash
+exp_name="neck_matched_nobn"
+python -u new_train.py \
+    --no-bottleneck \
+    --emsize 300 \
+    --nhid 500 \
+    --nlayers 1 \
+    --attention-unit 350 \
+    --dropout 0.5 \
+    --clip 0.5 \
+    --nfc 500 \
+    --lr 0.001 \
+    --save "models/model-cv.pt" \
+    --word-vector "data/vishal_glove/glove.42B.300d.txt.pt" \
+    --seed 42 \
+    --cuda \
+    --device 0 \
+    --log-interval 20 \
+    --dictionary "data/vishal_vocab.json" \
+    --shuffle \
+    --class-number 376 \
+    --data "data/vp16+cs17.strict.matched.lbl_in.json" \
+    --para-data "data/para_scores.tsv" \
+    --train-data "/home/king.2138/projects/genpara/data/vp_contextual_full/train_corrected.tsv" \
+    --val-data "/home/king.2138/projects/genpara/data/vp_contextual_full/dev_corrected.tsv" \
+    --test-data "/home/king.2138/projects/genpara/data/vp_contextual_full/test_corrected.tsv" \
+    --metric log_1_4 \
+    --sample-rate 0.2 \
+    --sampling-schema "None" \--sampling-schema "None" \
+    --label-data "data/label_map_new.csv" \
+    --out-log "choices.$exp_name.csv" \
+    --optimizer Adam \
+    --attention-hops 8 \
+    --reserved 0 \
+    --ncat 8 \
+    --penalty uncover \
+    --penalization-coeff 0.0 \
+    --sparsity L1 \
+    --sparsity-coeff 0.0 \
+    --epochs 40 \
+    --stage2 20
